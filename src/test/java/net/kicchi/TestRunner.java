@@ -19,14 +19,24 @@ public class TestRunner {
     @Test
     public void test(){
         try {
+            //DesiredCapabilities will be used for identifying our target system
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+            //we are testing an android device
             desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
+            //our target android virtual device os version is 5.1 (it should match, be careful)
             desiredCapabilities.setCapability(MobileCapabilityType.VERSION, "5.1");
+            //the application under test is etsy.apk which we added to our project as a file
             desiredCapabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"\\etsy.apk");
+            //the name of the target device (it should match, be careful)
             desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel2API22");
+            //defining command timeout
             desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 20000);
+
+            //define the appium server address - appium server is working on our local machine
+            //add desiredCapabilities in order to communicate with the target mobile system over appium server
             driver = new AppiumDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
             Thread.sleep(3000);
+            //locating an element from the etsy.apk
             WebElement getStarted = driver.findElement(By.xpath("//*[@text='Get Started']"));
             getStarted.click();
             Thread.sleep(5000);
